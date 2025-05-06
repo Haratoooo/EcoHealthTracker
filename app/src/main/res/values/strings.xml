@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ISE</string>
     <string-array name="document_categories">
+        <item>All</item>
         <item>Lab Test</item>
         <item>Prescription</item>
         <item>Visit Summary</item>

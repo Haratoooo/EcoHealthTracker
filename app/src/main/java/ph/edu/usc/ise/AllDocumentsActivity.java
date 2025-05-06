@@ -1,6 +1,7 @@
 package ph.edu.usc.ise;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +24,9 @@ public class AllDocumentsActivity extends AppCompatActivity {
     private HealthLogViewModel viewModel;
     private DocumentAdapter adapter;
     private Spinner spinnerSortCategory;
+    private boolean isSpinnerUpdating = false;  // Flag to prevent loop during spinner updates
+    private String lastSelectedCategory = "All";
+    private List<HealthDocument> allDocuments = new ArrayList<>();// Track the last selected category
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +52,11 @@ public class AllDocumentsActivity extends AppCompatActivity {
         viewModel.getDocuments().observe(this, new Observer<List<HealthDocument>>() {
             @Override
             public void onChanged(List<HealthDocument> documents) {
-                updateCategoryFilter(documents);  // Update spinner based on documents
-                updateRecyclerView(documents);    // Initial population of the list
+                Log.d("Documents", "Documents updated: " + documents.size());
+                allDocuments.clear();
+                allDocuments.addAll(documents); // Save the full list once
+                updateCategoryFilter(documents); // Update spinner
+                filterDocumentsByCategory(lastSelectedCategory);     // Initial population of the list
             }
         });
 
@@ -57,13 +64,22 @@ public class AllDocumentsActivity extends AppCompatActivity {
         spinnerSortCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // Prevent triggering the listener when the spinner is updated programmatically
+                if (isSpinnerUpdating) {
+                    return;
+                }
                 String selectedCategory = spinnerSortCategory.getSelectedItem().toString();
-                filterDocumentsByCategory(selectedCategory);  // Filter documents based on selected category
+                if (!selectedCategory.equals(lastSelectedCategory)) {
+                    lastSelectedCategory = selectedCategory;
+                    Log.d("CategorySelection", "Selected Category: " + selectedCategory);  // Log selected category
+                    filterDocumentsByCategory(selectedCategory);  // Filter documents based on selected category
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                filterDocumentsByCategory("");  // If nothing selected, show all documents
+                Log.d("CategorySelection", "No category selected, showing all documents");
+                filterDocumentsByCategory("All");  // If nothing selected, show all documents
             }
         });
     }
@@ -71,34 +87,59 @@ public class AllDocumentsActivity extends AppCompatActivity {
     // Update the spinner with unique categories from documents
     private void updateCategoryFilter(List<HealthDocument> documents) {
         Set<String> categories = new HashSet<>();
+        categories.add("All");  // Ensure "All" category is always the first one
         for (HealthDocument doc : documents) {
             categories.add(doc.category);
         }
-        categories.add(""); // To allow showing all documents
 
+        // Sort the categories (optional)
+        List<String> sortedCategories = new ArrayList<>(categories);
+        sortedCategories.sort(String::compareTo);  // Optional sorting
+
+        // Set the spinner adapter
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, new ArrayList<>(categories));
+                android.R.layout.simple_spinner_item, sortedCategories);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSortCategory.setAdapter(categoryAdapter);
+
+        // Ensure the spinner retains the current selection or defaults to "All"
+        if (!isSpinnerUpdating) {
+            isSpinnerUpdating = true;  // Set flag to true to avoid triggering the spinner listener
+            int position = categoryAdapter.getPosition(lastSelectedCategory); // Select the last category
+            spinnerSortCategory.setSelection(position);  // Set the spinner to the last selected category
+            isSpinnerUpdating = false;  // Reset the flag after updating the spinner
+        }
     }
 
     // Filter documents by selected category
     private void filterDocumentsByCategory(String category) {
-        List<HealthDocument> allDocuments = viewModel.getDocuments().getValue();
         List<HealthDocument> filteredDocuments = new ArrayList<>();
 
+        Log.d("Filtering", "Filtering documents by category: " + category);
+
         if (allDocuments != null) {
-            for (HealthDocument doc : allDocuments) {
-                if (category.isEmpty() || doc.category.equals(category)) {
-                    filteredDocuments.add(doc);
+            if ("All".equalsIgnoreCase(category)) {
+                filteredDocuments.addAll(allDocuments);
+                Log.d("Filtering", "Showing all documents");
+            } else {
+                for (HealthDocument doc : allDocuments) {
+                    String docCategory = doc.getCategory() != null ? doc.getCategory().trim() : "";
+                    if (category != null && category.trim().equalsIgnoreCase(docCategory)) {
+                        filteredDocuments.add(doc);
+                        Log.d("Filtering", "Document matches category: " + docCategory);
+                    }
                 }
             }
         }
-        updateRecyclerView(filteredDocuments);  // Update RecyclerView with filtered documents
+
+        Log.d("Filtering", "Filtered " + filteredDocuments.size() + " documents");
+        updateRecyclerView(filteredDocuments);
     }
 
     // Update the RecyclerView with new list of documents
-    private void updateRecyclerView(List<HealthDocument> documents) {
-        adapter.updateList(documents);
+    private void updateRecyclerView(List<HealthDocument> filteredDocuments) {
+        if (adapter != null) {
+            adapter.updateList(filteredDocuments);  // Update RecyclerView adapter with filtered documents
+        }
     }
 }

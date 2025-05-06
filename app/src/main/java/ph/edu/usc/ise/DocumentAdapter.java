@@ -2,6 +2,7 @@ package ph.edu.usc.ise;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,9 +51,10 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
     }
 
     // Update the list of documents in the adapter
-    public void updateList(List<HealthDocument> newDocs) {
-        this.docs = newDocs; // Update the docs list
-        notifyDataSetChanged(); // Notify the RecyclerView to refresh
+    public void updateList(List<HealthDocument> filteredDocuments) {
+        Log.d("RecyclerView", "Updating adapter with " + filteredDocuments.size() + " documents.");
+        this.docs = filteredDocuments;
+        notifyDataSetChanged();
     }
 
     // Create a new ViewHolder when RecyclerView needs a new one
@@ -69,17 +71,11 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
         holder.title.setText(doc.title);
         holder.date.setText(doc.date);
 
-        Uri uri = Uri.parse(doc.filePath);
-
-        // Set thumbnail based on file type or fallback
+        // Set thumbnail based on file type
         if (doc.filePath.endsWith(".pdf")) {
             holder.thumbnail.setImageResource(R.drawable.ic_pdf); // PDF icon
         } else {
-            try {
-                holder.thumbnail.setImageURI(uri); // Try to set the image thumbnail
-            } catch (SecurityException | IllegalArgumentException e) {
-                holder.thumbnail.setImageResource(R.drawable.ic_pdf); // fallback icon
-            }
+            holder.thumbnail.setImageURI(Uri.parse(doc.filePath)); // Set image URI for other file types
         }
 
         // Tag the view with the document so we can access it during the click
