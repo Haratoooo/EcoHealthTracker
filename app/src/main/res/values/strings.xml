@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ISE</string>
+    <string-array name="document_categories">
+        <item>Lab Test</item>
+        <item>Prescription</item>
+        <item>Visit Summary</item>
+        <item>Vaccination</item>
+    </string-array>
+    <string name="select_category">Select Category</string>
+</resources>
