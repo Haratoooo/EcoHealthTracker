@@ -2,7 +2,6 @@ package ph.edu.usc.ise;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -10,13 +9,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,10 @@ public class HealthLogActivity extends AppCompatActivity {
     private static final int REQ_GALLERY = 2, REQ_FILE = 3;
     private Uri fileUri;
     private HealthLogViewModel viewModel;
+
+    // ImageView to preview uploaded files
+    private ImageView imagePreview;
+    private TextView fileNameText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +57,10 @@ public class HealthLogActivity extends AppCompatActivity {
 
         // Initialize ViewModel here so it's available throughout the Activity
         viewModel = new ViewModelProvider(this).get(HealthLogViewModel.class);
+
+        // ImageView and TextView for file preview
+        imagePreview = findViewById(R.id.imagePreview);
+        fileNameText = findViewById(R.id.fileNameText);
 
         // Observe LiveData to update the RecyclerView when documents change
         viewModel.getDocuments().observe(this, documents -> {
@@ -95,6 +106,8 @@ public class HealthLogActivity extends AppCompatActivity {
             editNotes.setText("");
             spinnerCategory.setSelection(0); // Reset to default selection after saving
             fileUri = null; // Reset for the next doc
+            imagePreview.setVisibility(View.GONE);  // Hide image preview
+            fileNameText.setVisibility(View.GONE); // Hide file name text
             Toast.makeText(this, "Document saved!", Toast.LENGTH_SHORT).show();
         });
 
@@ -105,98 +118,51 @@ public class HealthLogActivity extends AppCompatActivity {
     }
 
     // Setup spinner and load the selected category
-    // Setup spinner and load the selected category
     private void setupCategorySpinner() {
-        // Create adapter using custom layout
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.document_categories));
 
-        // Use custom layout for drop-down items
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(categoryAdapter);
-
-        // Get selected category from SharedPreferences
-        SharedPreferences preferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
-        String selectedCategory = preferences.getString("selected_category", "All");
-
-        // Set the selected category in the spinner
-        int position = categoryAdapter.getPosition(selectedCategory);
-
-        // If the saved category isn't valid (e.g., "All" wasn't selected or is missing), default to "All"
-        if (position == -1) {
-            position = categoryAdapter.getPosition("All");
-        }
-
-        // Set the spinner selection (this will not trigger onItemSelected)
-        spinnerCategory.setSelection(position, false);
-
-        // Listener for when the spinner item is selected
-        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                String selectedCategory = parentView.getItemAtPosition(position).toString();
-                filterByCategory(selectedCategory); // Apply filter when category is changed
-
-                // Save the selected category to SharedPreferences
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("selected_category", selectedCategory);
-                editor.apply();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // Optionally handle case where nothing is selected
-            }
-        });
     }
-
 
     // Handle the result from gallery or file picker
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
-            boolean wasDeleted = data.getBooleanExtra("deleted", false);
-            if (wasDeleted) {
-                // Simply observe LiveData — it should auto-update the list
-                viewModel.getDocuments().observe(this, this::refreshList);
-            }
-        }
-
-        // For file pickers
         if (resultCode == RESULT_OK && data != null) {
-            Uri uri = data.getData();
-            if (uri != null) {
-                fileUri = uri;
-                getContentResolver().takePersistableUriPermission(
-                        uri,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                );
+            if (requestCode == REQ_GALLERY || requestCode == REQ_FILE) {
+                Uri uri = data.getData();
+                if (uri != null) {
+                    fileUri = uri;
+                    getContentResolver().takePersistableUriPermission(
+                            uri,
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    );
+
+                    if (requestCode == REQ_GALLERY) {
+                        imagePreview.setVisibility(View.VISIBLE);
+                        Glide.with(this).load(uri).into(imagePreview);
+                        fileNameText.setVisibility(View.GONE);
+                    } else {
+                        imagePreview.setVisibility(View.GONE);
+                        fileNameText.setVisibility(View.VISIBLE);
+                        fileNameText.setText(uri.getLastPathSegment());
+                    }
+                }
+            } else if (requestCode == 100) {
+                boolean wasDeleted = data.getBooleanExtra("deleted", false);
+                if (wasDeleted) {
+                    // Just refresh using current LiveData value
+                    List<HealthDocument> updatedDocs = viewModel.getDocuments().getValue();
+                    if (updatedDocs != null) {
+                        refreshList(updatedDocs);
+                    }
+                }
             }
         }
     }
-
-    // Filter documents based on the selected category
-    private void filterByCategory(String selectedCategory) {
-        List<HealthDocument> allDocs = viewModel.getDocuments().getValue();
-        if (allDocs == null) return;
-
-        if ("All".equals(selectedCategory)) {
-            refreshList(allDocs); // Show all documents
-            return;
-        }
-
-        List<HealthDocument> filteredDocs = new ArrayList<>();
-        for (HealthDocument doc : allDocs) {
-            if (doc.category.equals(selectedCategory)) {
-                filteredDocs.add(doc);
-            }
-        }
-
-        refreshList(filteredDocs); // Show only filtered documents
-    }
-
     // Refresh RecyclerView with the updated list
     private void refreshList(List<HealthDocument> documents) {
         DocumentAdapter adapter = new DocumentAdapter(documents, this, document -> {
@@ -206,5 +172,4 @@ public class HealthLogActivity extends AppCompatActivity {
         });
         recyclerDocuments.setAdapter(adapter);
     }
-
 }

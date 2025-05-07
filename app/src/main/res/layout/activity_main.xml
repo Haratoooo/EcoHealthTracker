@@ -42,7 +42,22 @@
             android:textColor="@color/white"/>
     </LinearLayout>
 
-    <!-- Document Details Form -->
+    <ImageView
+        android:id="@+id/imagePreview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        android:contentDescription="Image Preview" />
+
+    <TextView
+        android:id="@+id/fileNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="File Name"
+        android:textColor="@android:color/black"
+        android:paddingTop="16dp" />
+
     <EditText
         android:id="@+id/editTitle"
         android:hint="Title (e.g. X-Ray Result)"

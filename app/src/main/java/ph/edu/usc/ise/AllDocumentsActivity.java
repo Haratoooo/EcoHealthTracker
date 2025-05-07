@@ -94,13 +94,14 @@ public class AllDocumentsActivity extends AppCompatActivity {
         if (requestCode == 200 && resultCode == RESULT_OK && data != null) {
             boolean wasDeleted = data.getBooleanExtra("deleted", false);
             if (wasDeleted) {
-                // Refresh the full list (LiveData will already update the observer)
-                viewModel.getDocuments().observe(this, documents -> {
+                // No need to re-observe LiveData — just use the current value to refresh
+                List<HealthDocument> updatedDocs = viewModel.getDocuments().getValue();
+                if (updatedDocs != null) {
                     allDocuments.clear();
-                    allDocuments.addAll(documents);
-                    updateCategoryFilter(documents);
+                    allDocuments.addAll(updatedDocs);
+                    updateCategoryFilter(updatedDocs);
                     filterDocumentsByCategory(lastSelectedCategory);
-                });
+                }
             }
         }
     }
