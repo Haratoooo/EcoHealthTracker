@@ -1,5 +1,6 @@
 package ph.edu.usc.ise;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,7 +44,10 @@ public class AllDocumentsActivity extends AppCompatActivity {
 
         // Setup RecyclerView adapter
         adapter = new DocumentAdapter(new ArrayList<>(), this, document -> {
-            // Handle document click, open it or show details
+            // Start detail activity and pass the clicked document
+            Intent intent = new Intent(AllDocumentsActivity.this, DocumentDetailActivity.class);
+            intent.putExtra("document", document);
+            startActivityForResult(intent, 200);
         });
 
         recyclerAllDocuments.setAdapter(adapter);
@@ -82,6 +86,23 @@ public class AllDocumentsActivity extends AppCompatActivity {
                 filterDocumentsByCategory("All");  // If nothing selected, show all documents
             }
         });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 200 && resultCode == RESULT_OK && data != null) {
+            boolean wasDeleted = data.getBooleanExtra("deleted", false);
+            if (wasDeleted) {
+                // Refresh the full list (LiveData will already update the observer)
+                viewModel.getDocuments().observe(this, documents -> {
+                    allDocuments.clear();
+                    allDocuments.addAll(documents);
+                    updateCategoryFilter(documents);
+                    filterDocumentsByCategory(lastSelectedCategory);
+                });
+            }
+        }
     }
 
     // Update the spinner with unique categories from documents

@@ -109,10 +109,10 @@ public class HealthLogActivity extends AppCompatActivity {
     private void setupCategorySpinner() {
         // Create adapter using custom layout
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this,
-                R.layout.spinner_item, getResources().getStringArray(R.array.document_categories));
+                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.document_categories));
 
         // Use custom layout for drop-down items
-        categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(categoryAdapter);
 
         // Get selected category from SharedPreferences
@@ -155,6 +155,16 @@ public class HealthLogActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
+            boolean wasDeleted = data.getBooleanExtra("deleted", false);
+            if (wasDeleted) {
+                // Simply observe LiveData — it should auto-update the list
+                viewModel.getDocuments().observe(this, this::refreshList);
+            }
+        }
+
+        // For file pickers
         if (resultCode == RESULT_OK && data != null) {
             Uri uri = data.getData();
             if (uri != null) {
@@ -190,9 +200,11 @@ public class HealthLogActivity extends AppCompatActivity {
     // Refresh RecyclerView with the updated list
     private void refreshList(List<HealthDocument> documents) {
         DocumentAdapter adapter = new DocumentAdapter(documents, this, document -> {
-            viewModel.removeDocument(document); // Remove document
-            refreshList(viewModel.getDocuments().getValue()); // Refresh list after removal
+            Intent intent = new Intent(this, DocumentDetailActivity.class);
+            intent.putExtra("document", document);
+            startActivityForResult(intent, 100); // use a request code
         });
         recyclerDocuments.setAdapter(adapter);
     }
+
 }
