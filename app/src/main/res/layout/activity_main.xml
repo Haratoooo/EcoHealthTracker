@@ -1,119 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/white">
+    android:layout_height="match_parent">
 
-
-    <TextView android:text="Add Health Document"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:textColor="@color/black"/>
-
+    <!-- Main content area -->
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/white"
+        android:fitsSystemWindows="true">
 
-        <Button
-            android:id="@+id/btnChooseImage"
-            android:text="🖼️ Choose Image"
+        <TextView
+            android:text="Add Health Document"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/black" />
+
+        <!-- File upload buttons -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/btnChooseImage"
+                android:text="🖼️ Choose Image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="0.5"
+                android:backgroundTint="#263A99"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btnUploadFile"
+                android:text="📄 Upload File"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="0.5"
+                android:backgroundTint="#263A99"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <!-- Image preview -->
+        <ImageView
+            android:id="@+id/imagePreview"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:visibility="gone"
+            android:contentDescription="Image Preview" />
+
+        <!-- File name for uploaded file -->
+        <TextView
+            android:id="@+id/fileNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="0.5"
-            android:backgroundTint="#263A99"
-            android:textColor="@color/white"/>
+            android:visibility="gone"
+            android:text="File Name"
+            android:textColor="@android:color/black"
+            android:paddingTop="16dp" />
+
+        <!-- Document input fields -->
+        <EditText
+            android:id="@+id/editTitle"
+            android:hint="Title (e.g. X-Ray Result)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/editDate"
+            android:hint="Date (e.g. 2025-04-15)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/document_categories" />
+
+        <EditText
+            android:id="@+id/editNotes"
+            android:hint="Optional Notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine" />
 
         <Button
-            android:id="@+id/btnUploadFile"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_weight="0.5"
-            android:text="📄 Upload File"
+            android:id="@+id/btnSaveDocument"
+            android:text="Save Document"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:backgroundTint="#263A99"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
+
+        <TextView
+            android:text="Uploaded Documents"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black" />
+
+        <!-- RecyclerView for displaying uploaded documents -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerDocuments"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/btnViewAllDocuments"
+            android:text="View all documents"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#263A99"
+            android:textColor="@color/white" />
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:layout_gravity="bottom"
+            app:menu="@menu/bottom_navigation_menu" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imagePreview"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:visibility="gone"
-        android:contentDescription="Image Preview" />
+    <!-- Bottom navigation bar -->
 
-    <TextView
-        android:id="@+id/fileNameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="File Name"
-        android:textColor="@android:color/black"
-        android:paddingTop="16dp" />
-
-    <EditText
-        android:id="@+id/editTitle"
-        android:hint="Title (e.g. X-Ray Result)"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"/>
-
-    <EditText
-        android:id="@+id/editDate"
-        android:hint="Date (e.g. 2025-04-15)"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <Spinner
-        android:id="@+id/spinnerCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/document_categories"/>
-
-    <EditText
-        android:id="@+id/editNotes"
-        android:hint="Optional Notes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine" />
-
-    <Button
-        android:id="@+id/btnSaveDocument"
-        android:text="Save Document"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#263A99"
-        android:textColor="@color/white"/>
-
-    <TextView android:text="Uploaded Documents"
-        android:textSize="16sp"
-        android:layout_marginTop="20dp"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerDocuments"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="8dp"/>
-    <Button
-        android:id="@+id/btnViewAllDocuments"
-        android:text="View all documents"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#263A99"
-        android:textColor="@color/white"/>
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

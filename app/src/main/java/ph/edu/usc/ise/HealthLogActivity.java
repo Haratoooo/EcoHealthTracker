@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +43,17 @@ public class HealthLogActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main); // Use your XML layout file name
+
+        // Bottom Navigation Bar Setup
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_health_log); // Set initial selected item
+        bottomNavigationView.setOnItemSelectedListener(this::onBottomNavigationItemSelected);
 
         btnChooseImage = findViewById(R.id.btnChooseImage);
         btnUploadFile = findViewById(R.id.btnUploadFile);
         btnSaveDocument = findViewById(R.id.btnSaveDocument);
+
 
         editTitle = findViewById(R.id.editTitle);
         editDate = findViewById(R.id.editDate);
@@ -55,14 +63,14 @@ public class HealthLogActivity extends AppCompatActivity {
         recyclerDocuments = findViewById(R.id.recyclerDocuments);
         recyclerDocuments.setLayoutManager(new LinearLayoutManager(this));
 
-        // Initialize ViewModel here so it's available throughout the Activity
+        // Initialize ViewModel
         viewModel = new ViewModelProvider(this).get(HealthLogViewModel.class);
 
         // ImageView and TextView for file preview
         imagePreview = findViewById(R.id.imagePreview);
         fileNameText = findViewById(R.id.fileNameText);
 
-        // Observe LiveData to update the RecyclerView when documents change
+        // Observe LiveData to update RecyclerView when documents change
         viewModel.getDocuments().observe(this, documents -> {
             refreshList(documents); // Update RecyclerView when data changes
         });
@@ -86,10 +94,10 @@ public class HealthLogActivity extends AppCompatActivity {
 
         btnSaveDocument.setOnClickListener(v -> {
             if (fileUri == null) {
-                // You can add a Toast here if you'd like
-                return;
+                return; // If no file is selected, return
             }
 
+            // Create new document
             HealthDocument doc = new HealthDocument();
             doc.title = editTitle.getText().toString();
             doc.date = editDate.getText().toString();
@@ -97,6 +105,7 @@ public class HealthLogActivity extends AppCompatActivity {
             doc.notes = editNotes.getText().toString();
             doc.filePath = fileUri.toString();
 
+            // Add document to ViewModel and refresh list
             viewModel.addDocument(doc);
             refreshList(viewModel.getDocuments().getValue()); // Update the list after adding document
 
@@ -116,6 +125,25 @@ public class HealthLogActivity extends AppCompatActivity {
             startActivity(new Intent(this, AllDocumentsActivity.class));
         });
     }
+
+    private boolean onBottomNavigationItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.nav_health_log) {
+            // Already in Health Log Activity, do nothing
+            return true;
+        } else if (item.getItemId() == R.id.nav_dashboard) {
+            startActivity(new Intent(this, DashboardActivity.class));
+            return true;
+        } else if (item.getItemId() == R.id.nav_tips) {
+            startActivity(new Intent(this, HealthTipsActivity.class));
+            return true;
+        } else if (item.getItemId() == R.id.nav_symptoms) {
+            startActivity(new Intent(this, SymptomsTrackerActivity.class));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     // Setup spinner and load the selected category
     private void setupCategorySpinner() {
@@ -163,6 +191,7 @@ public class HealthLogActivity extends AppCompatActivity {
             }
         }
     }
+
     // Refresh RecyclerView with the updated list
     private void refreshList(List<HealthDocument> documents) {
         DocumentAdapter adapter = new DocumentAdapter(documents, this, document -> {
@@ -173,3 +202,5 @@ public class HealthLogActivity extends AppCompatActivity {
         recyclerDocuments.setAdapter(adapter);
     }
 }
+
+

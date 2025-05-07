@@ -3,9 +3,11 @@ package ph.edu.usc.ise;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,7 +31,9 @@ public class AllDocumentsActivity extends AppCompatActivity {
     private Spinner spinnerSortCategory;
     private boolean isSpinnerUpdating = false;  // Flag to prevent loop during spinner updates
     private String lastSelectedCategory = "All";
-    private List<HealthDocument> allDocuments = new ArrayList<>();// Track the last selected category
+    private List<HealthDocument> allDocuments = new ArrayList<>();
+
+    private Button btnback; // Track the last selected category
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +44,11 @@ public class AllDocumentsActivity extends AppCompatActivity {
         recyclerAllDocuments = findViewById(R.id.recyclerAllDocuments);
         spinnerSortCategory = findViewById(R.id.spinnerSortCategory);
         recyclerAllDocuments.setLayoutManager(new LinearLayoutManager(this));
+        btnback = findViewById(R.id.btnback);
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_health_log); // Set initial selected item
+        bottomNavigationView.setOnItemSelectedListener(this::onBottomNavigationItemSelected);
         // Initialize ViewModel
         viewModel = new ViewModelProvider(this).get(HealthLogViewModel.class);
 
@@ -51,6 +61,13 @@ public class AllDocumentsActivity extends AppCompatActivity {
         });
 
         recyclerAllDocuments.setAdapter(adapter);
+
+        btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         // Observe changes to the document list
         viewModel.getDocuments().observe(this, new Observer<List<HealthDocument>>() {
@@ -106,6 +123,23 @@ public class AllDocumentsActivity extends AppCompatActivity {
         }
     }
 
+    private boolean onBottomNavigationItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.nav_health_log) {
+            // Already in Health Log Activity, do nothing
+            return true;
+        } else if (item.getItemId() == R.id.nav_dashboard) {
+            startActivity(new Intent(this, DashboardActivity.class));
+            return true;
+        } else if (item.getItemId() == R.id.nav_tips) {
+            startActivity(new Intent(this, HealthTipsActivity.class));
+            return true;
+        } else if (item.getItemId() == R.id.nav_symptoms) {
+            startActivity(new Intent(this, SymptomsTrackerActivity.class));
+            return true;
+        } else {
+            return false;
+        }
+    }
     // Update the spinner with unique categories from documents
     private void updateCategoryFilter(List<HealthDocument> documents) {
         Set<String> categories = new HashSet<>();

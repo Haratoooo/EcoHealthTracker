@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_health_log"
+        android:icon="@drawable/pngtreedocument_vector_icon_3876242"
+        android:title="Health Log" />
+
+    <item
+        android:id="@+id/nav_dashboard"
+        android:icon="@drawable/pngtreevector_house_icon_4013530"
+        android:title="Dashboard" />
+
+    <item
+        android:id="@+id/nav_tips"
+        android:icon="@drawable/pngtreevector_health_icon_c_4155710"
+        android:title="Health Tips" />
+
+    <item
+        android:id="@+id/nav_symptoms"
+        android:icon="@drawable/magnifying_glass_icon_svg"
+        android:title="Symptoms" />
+</menu>
