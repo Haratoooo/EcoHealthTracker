@@ -1,41 +1,58 @@
-# EcoHealth Tracker 🌿📱
+# 🌱 EcoHealth Tracker
 
-**EcoHealth Tracker** is an Android app that allows users to upload, tag, and view personal health documents. The app supports file uploads from the camera, gallery, or file manager and provides a categorized view for easy access.
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Android CI](https://github.com/yourusername/ecohealth-tracker/actions/workflows/android-ci.yml/badge.svg)](https://github.com/yourusername/ecohealth-tracker/actions)
 
----
+A health monitoring app for tracking symptoms, environmental exposures, and medical documents in pollution-affected areas.
 
-## 📸 Features
+## 📱 Key Features
 
-- Upload health documents via:
-  - Photo gallery
-  - File picker (PDFs, images, etc.)
-- Add metadata such as document type and date
-- Store documents locally using Room database
-- Preview documents in a categorized gallery
-- Tap to view full file
-- Sort documents by type (e.g., Prescription, Report, Vaccination)
+### 1. Intelligent Dashboard
+- Personal health snapshot with recent symptoms
+- Environmental alerts with color-coded warnings
+- Medication reminders and tracking
 
----
+### 2. Comprehensive Tracking
+- Symptom logging (type, severity, notes)
+- Exposure reporting with location tagging
+- Voice memos and photo evidence support
 
-## 📱 Screenshots
+### 3. Health Education
+- Hygiene and safety guides
+- Nutrition plans for immunity
+- Pollution health myth debunking
 
-| Upload Page | Document Gallery | Document Preview |
-|-------------|------------------|------------------|
-| _Add a screenshot_ | _Add a screenshot_ | _Add a screenshot_ |
+### 4. Document Management
+- Upload medical documents (PDF, images)
+- Organized document gallery
+- Quick search functionality
 
----
+## 🛠️ Technical Stack
+
+| Component       | Technology           |
+|-----------------|----------------------|
+| Language        | Java             |
+| UI Framework    | Jetpack Compose      |
+| Database        | Room with LiveData   |
+| Architecture    | MVVM                 |
+| Navigation      | Material Components  |
+
+## 📸 Screenshots
+
+<p align="center">
+  <img src="screenshots/dashboard.jpg" width="30%" />
+  <img src="screenshots/tracker.jpg" width="30%" /> 
+  <img src="screenshots/documents.jpg" width="30%" />
+</p>
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-
 - Android Studio Hedgehog or later
-- Android SDK 33+
-- Java 17+
-- Gradle 8+
+- Android SDK 34
+- Java 17
 
 ### Installation
-
 ```bash
-git clone https://github.com/yourusername/EcoHealthTracker.git
-cd EcoHealthTracker
+git clone https://github.com/yourusername/ecohealth-tracker.git
+cd ecohealth-tracker
