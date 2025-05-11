@@ -206,6 +206,6 @@
         android:layout_gravity="bottom"
         android:background="@color/white"
         app:menu="@menu/health_tips_nav_menu"
-        app:itemIconTint="@color/nav_item_color"
-        app:itemTextColor="@color/nav_item_color" />
+        app:itemIconTint="@drawable/nav_item_color_selector"
+        app:itemTextColor="@drawable/nav_item_color_selector" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

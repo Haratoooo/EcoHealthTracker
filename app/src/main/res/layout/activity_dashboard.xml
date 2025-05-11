@@ -42,7 +42,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                app:cardElevation="4dp"
+                android:backgroundTint="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -81,7 +82,7 @@
                             android:id="@+id/haiiStatus"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="HAIII: Moderate Risk"
+                            android:text="Moderate Risk"
                             android:textSize="16sp"
                             android:textColor="#FFA500"
                             android:layout_marginTop="8dp"/>
@@ -95,7 +96,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                app:cardElevation="4dp"
+                android:backgroundTint="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -189,7 +191,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                app:cardElevation="4dp"
+                android:backgroundTint="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -281,7 +284,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                app:cardElevation="4dp"
+                android:backgroundTint="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -426,6 +430,6 @@
         android:layout_gravity="bottom"
         android:background="@color/white"
         app:menu="@menu/bottom_navigation_menu"
-        app:itemIconTint="@color/nav_item_color"
-        app:itemTextColor="@color/nav_item_color"/>
+        app:itemIconTint="@drawable/nav_item_color_selector"
+        app:itemTextColor="@drawable/nav_item_color_selector"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
