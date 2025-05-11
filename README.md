@@ -54,5 +54,5 @@ A health monitoring app for tracking symptoms, environmental exposures, and medi
 
 ### Installation
 ```bash
-git clone https://github.com/yourusername/ecohealth-tracker.git
+git clone https://github.com/haratoooo/ecohealth-tracker.git
 cd ecohealth-tracker
