@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!-- Top Bar -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#263A99"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/back"
+            android:layout_alignParentStart="true"
+            android:contentDescription="Back"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/topTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nutrition for Immunity"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <!-- Main Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="56dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Card Image -->
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_marginBottom="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/nutrition"
+            android:contentDescription="Immune-boosting foods"
+            android:background="@drawable/image_border" />
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Essential Nutrition Tips for a Stronger Immune System"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Author Row -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/circle_bg"
+                    android:padding="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="by Nutrition Wellness Team"
+                    android:textSize="14sp"
+                    android:textColor="#666666" />
+            </LinearLayout>
+
+            <!-- Body Text -->
+            <TextView
+                android:id="@+id/body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="A well-balanced diet rich in certain nutrients can help strengthen your immune system. Here are science-backed nutritional strategies to enhance your body's natural defenses."
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- Section Headers -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Key Immune-Boosting Nutrients"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Vitamin C: Citrus fruits, bell peppers, strawberries\n• Vitamin D: Fatty fish, fortified dairy, sunlight\n• Zinc: Nuts, seeds, legumes, whole grains\n• Selenium: Brazil nuts, seafood, eggs\n• Iron: Lean meats, beans, spinach\n• Probiotics: Yogurt, kefir, fermented foods"
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:lineSpacingExtra="4dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Superfoods for Immunity"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Garlic: Contains allicin with antimicrobial properties\n• Ginger: Anti-inflammatory and antioxidant effects\n• Turmeric: Curcumin boosts immune cell activity\n• Berries: Rich in antioxidants and flavonoids\n• Green tea: Packed with polyphenols and EGCG\n• Mushrooms: Contain beta-glucans that enhance immunity"
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:lineSpacingExtra="4dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Daily Eating Habits"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Eat a rainbow of fruits and vegetables daily\n• Include protein with every meal\n• Choose whole grains over refined carbs\n• Stay hydrated with water and herbal teas\n• Limit processed foods and added sugars\n• Practice mindful eating to improve digestion"
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:lineSpacingExtra="4dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gut Health Connection"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• 70% of immune cells reside in the gut\n• Consume prebiotic foods (onions, bananas, oats)\n• Include probiotic-rich foods daily\n• Eat fiber-rich foods to feed good bacteria\n• Avoid unnecessary antibiotics that disrupt microbiome\n• Consider fermented foods for diversity"
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:lineSpacingExtra="4dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Immunity-Boosting Recipes"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Morning: Turmeric golden milk or berry smoothie\n• Lunch: Spinach salad with salmon and nuts\n• Snack: Greek yogurt with honey and walnuts\n• Dinner: Chicken vegetable soup with garlic\n• Beverage: Green tea with lemon and ginger\n• Dessert: Dark chocolate (70%+ cocoa)"
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:lineSpacingExtra="4dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lifestyle Synergy"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Combine good nutrition with quality sleep\n• Manage stress through mindful eating\n• Stay physically active to circulate immune cells\n• Avoid smoking and limit alcohol intake\n• Maintain healthy weight for optimal immune function\n• Practice food safety to prevent infections"
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:lineSpacingExtra="4dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        app:menu="@menu/health_tips_nav_menu"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

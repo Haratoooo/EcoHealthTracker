@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!-- Top Bar -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#263A99"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/back"
+            android:layout_alignParentStart="true"
+            android:contentDescription="Back"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/topTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Health Mythbusters"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <!-- Main Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="56dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Card Image -->
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_marginBottom="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pngtreequestion_mark_little_white_man_18163656"
+                android:contentDescription="Health myths illustration"
+                android:background="@drawable/image_border" />
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Debunking Common Health and Pollution Myths"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Author Row -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/circle_bg"
+                    android:padding="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="by Public Health Facts"
+                    android:textSize="14sp"
+                    android:textColor="#666666" />
+            </LinearLayout>
+
+            <!-- Body Text -->
+            <TextView
+                android:id="@+id/body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Many common beliefs about health and pollution are misleading or completely false. Here we separate fact from fiction based on scientific evidence."
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- Pollution Myths Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pollution Myths Debunked"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Air pollution only affects lungs: False - Impacts heart, brain and unborn babies\n• Plants clean indoor air completely: False - They help minimally\n• Masks don't protect against pollution: False - N95 masks are effective\n• Countryside air is always clean: False - Agricultural pollution exists"
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:lineSpacingExtra="4dp"/>
+
+            <!-- COVID-19 Myths Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="COVID-19 Misconceptions"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Only elderly get severe COVID: False - All ages are at risk\n• Hot weather kills the virus: False - Spreads in all climates\n• 5G spreads COVID: False - No scientific basis\n• Alcohol prevents infection: False - Dangerous myth"
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:lineSpacingExtra="4dp"/>
+
+            <!-- General Health Myths Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="General Health Myths"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Need 8 glasses of water daily: False - Needs vary\n• Sugar causes hyperactivity: False - Debunked by studies\n• Reading in dim light ruins eyesight: False - Temporary strain only\n• Vaccines cause autism: False - Original study was fraudulent"
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:lineSpacingExtra="4dp"/>
+
+            <!-- Evidence-Based Facts Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Evidence-Based Facts"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Air pollution reduces global life expectancy by 2+ years\n• Proper masks reduce infection risk by 80%\n• Vaccines saved 150+ million lives in 50 years\n• Indoor pollution is often worse than outdoor\n• Handwashing reduces respiratory infections by 20%"
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:lineSpacingExtra="4dp"/>
+
+            <!-- Verification Tips Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="How to Verify Health Claims"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Check WHO/CDC/peer-reviewed sources\n• Beware of miracle cure claims\n• Look for multiple confirming sources\n• Check publication dates - science evolves\n• Consult healthcare professionals"
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:lineSpacingExtra="4dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        app:menu="@menu/health_tips_nav_menu"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

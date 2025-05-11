@@ -18,6 +18,9 @@
         android:requestLegacyExternalStorage="true">
         <activity android:name=".AllDocumentsActivity" />
         <activity android:name=".DocumentDetailActivity" />
+        <activity android:name=".HealthTipsActivity" />
+        <activity android:name=".MythbustersActivity" />
+        <activity android:name=".NutritionTipsActivity" />
         <activity
             android:name=".HealthLogActivity"
             android:exported="true">

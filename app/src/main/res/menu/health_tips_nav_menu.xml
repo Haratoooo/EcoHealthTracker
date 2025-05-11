@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_hygiene"
+        android:icon="@drawable/pngtreevector_health_icon_c_4155710"
+        android:title="Hygiene"/>
+    <item
+        android:id="@+id/nav_nutrition"
+        android:icon="@drawable/ic_pdf"
+        android:title="Nutrition"/>
+    <item
+        android:id="@+id/nav_mythbusters"
+        android:icon="@drawable/magnifying_glass_icon_svg"
+        android:title="Myths"/>
+
+</menu>
