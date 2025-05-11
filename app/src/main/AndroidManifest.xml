@@ -21,6 +21,8 @@
         <activity android:name=".HealthTipsActivity" />
         <activity android:name=".MythbustersActivity" />
         <activity android:name=".NutritionTipsActivity" />
+        <activity android:name=".SymptomsTrackerActivity" />
+        <activity android:name=".AllLogsActivity" />
         <activity
             android:name=".HealthLogActivity"
             android:exported="true">
